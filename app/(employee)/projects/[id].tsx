@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo } from "react";
+import { useMemo } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useTheme } from "../../../theme/theme";
 import { SPACING, RADIUS } from "../../../theme/spacing";
-import { useProjectDetail, useProjectTasks, type IProjectTask } from "../../../hooks/use-projects";
+import { useProjectDetail, useProjectTasks } from "../../../hooks/use-projects";
 import { ScreenHeader } from "../../../components/screen-header";
 import { StatusBadge } from "../../../components/status-badge";
 import { ProgressRing } from "../../../components/progress-ring";
@@ -74,7 +74,7 @@ export default function EmployeeProjectDetail() {
           <KPICard label="Open" value={project.open_task_count} style={styles.kpiCard} />
           <KPICard
             label="Hours"
-            value={Math.round((tasks.data?.records ?? []).reduce((s, t) => s + t.effective_hours, 0))}
+            value={Math.round((tasks.data?.records ?? []).reduce((s: number, t: any) => s + t.effective_hours, 0))}
             suffix="h"
             style={styles.kpiCard}
           />
@@ -87,7 +87,7 @@ export default function EmployeeProjectDetail() {
         ) : (tasks.data?.records ?? []).length === 0 ? (
           <Text style={[styles.emptyText, { color: colors.textMuted }]}>No tasks</Text>
         ) : (
-          (tasks.data?.records ?? []).map((task) => (
+          (tasks.data?.records ?? []).map((task: any) => (
             <TouchableOpacity
               key={task.id}
               style={[styles.taskRow, { borderColor: colors.border }]}

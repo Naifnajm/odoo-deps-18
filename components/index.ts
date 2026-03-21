@@ -13,3 +13,4 @@ export { NetworkBanner } from "./network-banner";
 export { ErrorBoundary, ErrorFallback } from "./error-boundary";
 export { ScreenHeader } from "./screen-header";
 export { MiniLineChart, MiniBarChart } from "./mini-chart";
+export { TabIcon } from "./tab-icon";

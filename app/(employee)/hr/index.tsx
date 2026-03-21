@@ -28,12 +28,12 @@ export default function HrIndex() {
   const payslips = usePayslips();
 
   const totalLeaveBalance = (leaves.data?.records ?? []).reduce(
-    (s, l) => s + l.remaining_leaves,
+    (s: number, l: any) => s + l.remaining_leaves,
     0
   );
 
   const hoursThisMonth = (attendance.data?.records ?? [])
-    .filter((a) => {
+    .filter((a: any) => {
       const checkIn = new Date(a.check_in);
       const now = new Date();
       return (
@@ -41,7 +41,7 @@ export default function HrIndex() {
         checkIn.getFullYear() === now.getFullYear()
       );
     })
-    .reduce((s, a) => s + a.worked_hours, 0);
+    .reduce((s: number, a: any) => s + a.worked_hours, 0);
 
   const latestPayslip = (payslips.data?.records ?? [])[0];
 

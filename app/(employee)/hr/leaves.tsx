@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import {
   View,
   Text,
@@ -67,7 +67,7 @@ export default function LeavesScreen() {
             No leave allocations found
           </Text>
         ) : (
-          (allocations.data?.records ?? []).map((alloc) => (
+          (allocations.data?.records ?? []).map((alloc: ILeaveAllocation) => (
             <AllocationCard key={alloc.id} allocation={alloc} colors={colors} />
           ))
         )}
@@ -84,7 +84,7 @@ export default function LeavesScreen() {
             No leave requests
           </Text>
         ) : (
-          (requests.data?.records ?? []).map((req) => (
+          (requests.data?.records ?? []).map((req: ILeaveRequest) => (
             <LeaveRequestRow key={req.id} request={req} colors={colors} />
           ))
         )}

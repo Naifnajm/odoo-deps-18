@@ -33,35 +33,35 @@ export default function ClientLayout() {
         name="projects"
         options={{
           title: "Projects",
-          tabBarIcon: ({ color }) => <TabIcon name="projects" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="projects" color={color} />,
         }}
       />
       <Tabs.Screen
         name="invoices"
         options={{
           title: "Invoices",
-          tabBarIcon: ({ color }) => <TabIcon name="invoices" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="invoices" color={color} />,
         }}
       />
       <Tabs.Screen
         name="support"
         options={{
           title: "Support",
-          tabBarIcon: ({ color }) => <TabIcon name="support" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="support" color={color} />,
         }}
       />
       <Tabs.Screen
         name="documents"
         options={{
           title: "Documents",
-          tabBarIcon: ({ color }) => <TabIcon name="documents" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="documents" color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <TabIcon name="profile" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="profile" color={color} />,
         }}
       />
     </Tabs>

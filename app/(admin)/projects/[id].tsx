@@ -1,13 +1,12 @@
-import { useCallback, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Alert,
 } from "react-native";
-import { useLocalSearchParams, router } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useTheme } from "../../../theme/theme";
@@ -15,7 +14,6 @@ import { SPACING, RADIUS } from "../../../theme/spacing";
 import {
   useProjectDetail,
   useProjectTasks,
-  useUpdateTask,
   type IProjectTask,
 } from "../../../hooks/use-projects";
 import { ScreenHeader } from "../../../components/screen-header";
@@ -36,12 +34,11 @@ export default function AdminProjectDetail() {
 
   const { data: project, isLoading, isError, refetch } = useProjectDetail(projectId);
   const tasks = useProjectTasks(projectId);
-  const updateTask = useUpdateTask();
 
   const filteredTasks = useMemo(() => {
     const allTasks = tasks.data?.records ?? [];
-    if (viewMode === "open") return allTasks.filter((t) => t.kanban_state !== "done");
-    if (viewMode === "done") return allTasks.filter((t) => t.kanban_state === "done");
+    if (viewMode === "open") return allTasks.filter((t: IProjectTask) => t.kanban_state !== "done");
+    if (viewMode === "done") return allTasks.filter((t: IProjectTask) => t.kanban_state === "done");
     return allTasks;
   }, [tasks.data?.records, viewMode]);
 
@@ -78,8 +75,8 @@ export default function AdminProjectDetail() {
     ? (completedTasks / project.task_count) * 100
     : 0;
 
-  const totalHours = (tasks.data?.records ?? []).reduce((s, t) => s + t.effective_hours, 0);
-  const plannedHours = (tasks.data?.records ?? []).reduce((s, t) => s + t.planned_hours, 0);
+  const totalHours = (tasks.data?.records ?? []).reduce((s: number, t: IProjectTask) => s + t.effective_hours, 0);
+  const plannedHours = (tasks.data?.records ?? []).reduce((s: number, t: IProjectTask) => s + t.planned_hours, 0);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
@@ -211,7 +208,7 @@ export default function AdminProjectDetail() {
             No tasks found
           </Text>
         ) : (
-          Object.entries(tasksByStage).map(([stageName, stageTasks]) => (
+          (Object.entries(tasksByStage) as [string, IProjectTask[]][]).map(([stageName, stageTasks]) => (
             <View key={stageName}>
               <View style={styles.stageHeader}>
                 <Text style={[styles.stageName, { color: colors.textMuted }]}>
@@ -221,8 +218,10 @@ export default function AdminProjectDetail() {
                   {stageTasks.length}
                 </Text>
               </View>
-              {stageTasks.map((task) => (
-                <TaskRow key={task.id} task={task} />
+              {stageTasks.map((task: IProjectTask) => (
+                <View key={task.id}>
+                  <TaskRow task={task} />
+                </View>
               ))}
             </View>
           ))
@@ -235,8 +234,6 @@ export default function AdminProjectDetail() {
 function TaskRow({ task }: { task: IProjectTask }) {
   const { colors } = useTheme();
 
-  const priorityVariant =
-    task.priority === "1" ? "danger" : task.priority === "0" ? "neutral" : "neutral";
   const kanbanVariant =
     task.kanban_state === "done"
       ? "success"
@@ -250,7 +247,7 @@ function TaskRow({ task }: { task: IProjectTask }) {
         ? "Blocked"
         : "In Progress";
 
-  const assignees = task.user_ids.map((u) => u[1]).join(", ");
+  const assignees = task.user_ids.map((u: [number, string]) => u[1]).join(", ");
   const hasProgress = task.planned_hours > 0;
 
   return (

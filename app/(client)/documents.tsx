@@ -35,12 +35,12 @@ export default function DocumentsScreen() {
     if (!searchQuery.trim()) return records;
     const q = searchQuery.toLowerCase();
     return records.filter(
-      (d) => d.name.toLowerCase().includes(q) || (d.description ?? "").toLowerCase().includes(q)
+      (d: IClientDocument) => d.name.toLowerCase().includes(q) || (d.description ?? "").toLowerCase().includes(q)
     );
   }, [data?.records, searchQuery]);
 
   const renderItem: ListRenderItem<IClientDocument> = useCallback(
-    ({ item }) => <DocumentRow doc={item} />,
+    ({ item }: { item: IClientDocument }) => <DocumentRow doc={item} />,
     []
   );
 
@@ -72,7 +72,7 @@ export default function DocumentsScreen() {
       <OdooList
         data={filtered}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IClientDocument) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

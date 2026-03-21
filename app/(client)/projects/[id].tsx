@@ -2,10 +2,9 @@ import {
   View,
   Text,
   ScrollView,
-  TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { useLocalSearchParams, router } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useTheme } from "../../../theme/theme";
@@ -47,7 +46,7 @@ export default function ClientProjectDetail() {
 
   const completed = project.task_count - project.open_task_count;
   const progress = project.task_count > 0 ? (completed / project.task_count) * 100 : 0;
-  const totalHours = (tasks.data?.records ?? []).reduce((s, t) => s + t.effective_hours, 0);
+  const totalHours = (tasks.data?.records ?? []).reduce((s: number, t: any) => s + t.effective_hours, 0);
 
   return (
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
@@ -109,7 +108,7 @@ export default function ClientProjectDetail() {
         ) : (tasks.data?.records ?? []).length === 0 ? (
           <Text style={[styles.emptyText, { color: colors.textMuted }]}>No tasks</Text>
         ) : (
-          (tasks.data?.records ?? []).map((task) => {
+          (tasks.data?.records ?? []).map((task: any) => {
             const kanbanVariant = task.kanban_state === "done" ? "success" : task.kanban_state === "blocked" ? "danger" : "info";
             const kanbanLabel = task.kanban_state === "done" ? "Done" : task.kanban_state === "blocked" ? "Blocked" : "In Progress";
 

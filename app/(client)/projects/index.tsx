@@ -22,7 +22,7 @@ import { ScreenHeader } from "../../../components/screen-header";
 export default function ClientProjectsIndex() {
   const { colors } = useTheme();
   const queryClient = useQueryClient();
-  const partnerId = useAuthStore((s) => s.user?.partnerId);
+  const partnerId = useAuthStore((s: any) => s.user?.partnerId);
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading, isRefetching } = useProjects(
@@ -37,11 +37,11 @@ export default function ClientProjectsIndex() {
     const records = data?.records ?? [];
     if (!searchQuery.trim()) return records;
     const q = searchQuery.toLowerCase();
-    return records.filter((p) => p.name.toLowerCase().includes(q));
+    return records.filter((p: IProject) => p.name.toLowerCase().includes(q));
   }, [data?.records, searchQuery]);
 
   const renderItem: ListRenderItem<IProject> = useCallback(
-    ({ item }) => {
+    ({ item }: { item: IProject }) => {
       const completed = item.task_count - item.open_task_count;
       const progress = item.task_count > 0 ? (completed / item.task_count) * 100 : 0;
 
@@ -96,7 +96,7 @@ export default function ClientProjectsIndex() {
       <OdooList
         data={filtered}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IProject) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

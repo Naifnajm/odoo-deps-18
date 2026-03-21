@@ -155,7 +155,7 @@ export default function TaskDetail() {
           {task.user_ids.length > 0 && (
             <InfoRow
               label="Assigned To"
-              value={task.user_ids.map((u) => u[1]).join(", ")}
+              value={task.user_ids.map((u: [number, string]) => u[1]).join(", ")}
               colors={colors}
             />
           )}

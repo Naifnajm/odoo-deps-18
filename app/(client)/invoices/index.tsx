@@ -32,11 +32,11 @@ const PAYMENT_BADGE: Record<TPaymentState, { label: string; variant: "success" |
 export default function ClientInvoicesIndex() {
   const { colors } = useTheme();
   const queryClient = useQueryClient();
-  const partnerId = useAuthStore((s) => s.user?.partnerId);
+  const partnerId = useAuthStore((s: any) => s.user?.partnerId);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<TFilter>("all");
 
-  const { data, isLoading, isRefetching, isError } = useInvoices(
+  const { data, isLoading, isRefetching } = useInvoices(
     partnerId
       ? [["partner_id", "=", partnerId], ["move_type", "=", "out_invoice"]]
       : [["move_type", "=", "out_invoice"]]
@@ -50,16 +50,16 @@ export default function ClientInvoicesIndex() {
     let records = data?.records ?? [];
     const now = new Date();
 
-    if (filter === "unpaid") records = records.filter((i) => i.payment_state === "not_paid" || i.payment_state === "partial");
-    else if (filter === "paid") records = records.filter((i) => i.payment_state === "paid");
-    else if (filter === "overdue") records = records.filter((i) => {
+    if (filter === "unpaid") records = records.filter((i: IInvoice) => i.payment_state === "not_paid" || i.payment_state === "partial");
+    else if (filter === "paid") records = records.filter((i: IInvoice) => i.payment_state === "paid");
+    else if (filter === "overdue") records = records.filter((i: IInvoice) => {
       if (i.payment_state === "paid") return false;
       return i.invoice_date_due && new Date(i.invoice_date_due) < now;
     });
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      records = records.filter((i) => i.name.toLowerCase().includes(q));
+      records = records.filter((i: IInvoice) => i.name.toLowerCase().includes(q));
     }
 
     return records;
@@ -67,12 +67,12 @@ export default function ClientInvoicesIndex() {
 
   const totalUnpaid = useMemo(() => {
     return (data?.records ?? [])
-      .filter((i) => i.payment_state !== "paid")
-      .reduce((s, i) => s + i.amount_residual, 0);
+      .filter((i: IInvoice) => i.payment_state !== "paid")
+      .reduce((s: number, i: IInvoice) => s + i.amount_residual, 0);
   }, [data?.records]);
 
   const renderItem: ListRenderItem<IInvoice> = useCallback(
-    ({ item }) => <InvoiceRow invoice={item} />,
+    ({ item }: { item: IInvoice }) => <InvoiceRow invoice={item} />,
     []
   );
 
@@ -127,7 +127,7 @@ export default function ClientInvoicesIndex() {
       <OdooList
         data={filtered}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IInvoice) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

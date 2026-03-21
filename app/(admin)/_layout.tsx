@@ -33,42 +33,42 @@ export default function AdminLayout() {
         name="dashboard"
         options={{
           title: "Dashboard",
-          tabBarIcon: ({ color }) => <TabIcon name="dashboard" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="dashboard" color={color} />,
         }}
       />
       <Tabs.Screen
         name="crm"
         options={{
           title: "CRM",
-          tabBarIcon: ({ color }) => <TabIcon name="crm" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="crm" color={color} />,
         }}
       />
       <Tabs.Screen
         name="projects"
         options={{
           title: "Projects",
-          tabBarIcon: ({ color }) => <TabIcon name="projects" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="projects" color={color} />,
         }}
       />
       <Tabs.Screen
         name="invoices"
         options={{
           title: "Invoices",
-          tabBarIcon: ({ color }) => <TabIcon name="invoices" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="invoices" color={color} />,
         }}
       />
       <Tabs.Screen
         name="reports"
         options={{
           title: "Reports",
-          tabBarIcon: ({ color }) => <TabIcon name="reports" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="reports" color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: "Settings",
-          tabBarIcon: ({ color }) => <TabIcon name="settings" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="settings" color={color} />,
         }}
       />
     </Tabs>

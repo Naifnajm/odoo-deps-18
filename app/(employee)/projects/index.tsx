@@ -17,14 +17,13 @@ import { useProjects, type IProject } from "../../../hooks/use-projects";
 import { odooKeys } from "../../../hooks/use-odoo-query";
 import { OdooList } from "../../../components/odoo-list";
 import { ProgressRing } from "../../../components/progress-ring";
-import { StatusBadge } from "../../../components/status-badge";
 import { ScreenHeader } from "../../../components/screen-header";
 import { ErrorFallback } from "../../../components/error-boundary";
 
 export default function EmployeeProjectsIndex() {
   const { colors } = useTheme();
   const queryClient = useQueryClient();
-  const uid = useAuthStore((s) => s.user?.uid);
+  const uid = useAuthStore((s: any) => s.user?.uid);
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading, isRefetching, isError } = useProjects(
@@ -39,11 +38,11 @@ export default function EmployeeProjectsIndex() {
     const records = data?.records ?? [];
     if (!searchQuery.trim()) return records;
     const q = searchQuery.toLowerCase();
-    return records.filter((p) => p.name.toLowerCase().includes(q));
+    return records.filter((p: IProject) => p.name.toLowerCase().includes(q));
   }, [data?.records, searchQuery]);
 
   const renderItem: ListRenderItem<IProject> = useCallback(
-    ({ item }) => {
+    ({ item }: { item: IProject }) => {
       const completed = item.task_count - item.open_task_count;
       const progress = item.task_count > 0 ? (completed / item.task_count) * 100 : 0;
 
@@ -102,7 +101,7 @@ export default function EmployeeProjectsIndex() {
       <OdooList
         data={filtered}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IProject) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

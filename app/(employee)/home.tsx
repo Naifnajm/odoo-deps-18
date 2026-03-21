@@ -19,11 +19,10 @@ import {
   useEmployeeHomeSummary,
   useMyTasks,
   useCheckInOut,
-  type IEmployeeTask,
 } from "../../hooks/use-employee";
 import { odooKeys } from "../../hooks/use-odoo-query";
 import { KPICard } from "../../components/kpi-card";
-import { StatusBadge } from "../../components/status-badge";
+
 import { ProgressRing } from "../../components/progress-ring";
 import { SkeletonGroup, SkeletonLoader } from "../../components/skeleton-loader";
 import { ErrorFallback } from "../../components/error-boundary";
@@ -31,7 +30,7 @@ import { ErrorFallback } from "../../components/error-boundary";
 export default function EmployeeHome() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const user = useAuthStore((s) => s.user);
+  const user = useAuthStore((s: any) => s.user);
   const queryClient = useQueryClient();
 
   const summary = useEmployeeHomeSummary();
@@ -62,7 +61,7 @@ export default function EmployeeHome() {
   const urgentTasks = useMemo(() => {
     const allTasks = tasks.data?.records ?? [];
     return allTasks
-      .filter((t) => t.kanban_state !== "done")
+      .filter((t: any) => t.kanban_state !== "done")
       .slice(0, 5);
   }, [tasks.data?.records]);
 
@@ -217,7 +216,7 @@ export default function EmployeeHome() {
           No upcoming tasks
         </Text>
       ) : (
-        urgentTasks.map((task) => (
+        urgentTasks.map((task: any) => (
           <TouchableOpacity
             key={task.id}
             style={[styles.taskRow, { borderColor: colors.border }]}

@@ -43,15 +43,15 @@ export default function AdminInvoicesIndex() {
 
     // Apply filter
     if (filter === "draft") {
-      records = records.filter((i) => i.state === "draft");
+      records = records.filter((i: IInvoice) => i.state === "draft");
     } else if (filter === "posted") {
-      records = records.filter((i) => i.state === "posted" && i.payment_state !== "paid");
+      records = records.filter((i: IInvoice) => i.state === "posted" && i.payment_state !== "paid");
     } else if (filter === "paid") {
-      records = records.filter((i) => i.payment_state === "paid");
+      records = records.filter((i: IInvoice) => i.payment_state === "paid");
     } else if (filter === "overdue") {
       const now = new Date();
       records = records.filter(
-        (i) =>
+        (i: IInvoice) =>
           i.state === "posted" &&
           i.payment_state !== "paid" &&
           i.invoice_date_due &&
@@ -63,7 +63,7 @@ export default function AdminInvoicesIndex() {
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       records = records.filter(
-        (i) =>
+        (i: IInvoice) =>
           i.name.toLowerCase().includes(q) ||
           (i.partner_id && i.partner_id[1].toLowerCase().includes(q)) ||
           (i.ref && i.ref.toLowerCase().includes(q))
@@ -76,14 +76,14 @@ export default function AdminInvoicesIndex() {
   const totals = useMemo(() => {
     const invoices = filteredInvoices;
     return {
-      total: invoices.reduce((s, i) => s + i.amount_total, 0),
-      residual: invoices.reduce((s, i) => s + i.amount_residual, 0),
+      total: invoices.reduce((s: number, i: IInvoice) => s + i.amount_total, 0),
+      residual: invoices.reduce((s: number, i: IInvoice) => s + i.amount_residual, 0),
       count: invoices.length,
     };
   }, [filteredInvoices]);
 
   const renderItem: ListRenderItem<IInvoice> = useCallback(
-    ({ item }) => <InvoiceRow invoice={item} />,
+    ({ item }: { item: IInvoice }) => <InvoiceRow invoice={item} />,
     []
   );
 
@@ -161,7 +161,7 @@ export default function AdminInvoicesIndex() {
       <OdooList
         data={filteredInvoices}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IInvoice) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

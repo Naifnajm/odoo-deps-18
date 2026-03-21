@@ -61,16 +61,16 @@ export default function CrmIndex() {
     if (!searchQuery.trim()) return pipeline;
 
     const query = searchQuery.toLowerCase();
-    return pipeline.map((col) => ({
+    return pipeline.map((col: { id: number; title: string; count: number; totalRevenue: number; isWon: boolean; items: ICrmLead[] }) => ({
       ...col,
       items: col.items.filter(
-        (lead) =>
+        (lead: ICrmLead) =>
           lead.name.toLowerCase().includes(query) ||
           (lead.partner_name && lead.partner_name.toLowerCase().includes(query)) ||
           (lead.contact_name && lead.contact_name.toLowerCase().includes(query))
       ),
       count: col.items.filter(
-        (lead) =>
+        (lead: ICrmLead) =>
           lead.name.toLowerCase().includes(query) ||
           (lead.partner_name && lead.partner_name.toLowerCase().includes(query)) ||
           (lead.contact_name && lead.contact_name.toLowerCase().includes(query))
@@ -90,7 +90,7 @@ export default function CrmIndex() {
     <View style={[styles.screen, { backgroundColor: colors.background }]}>
       <ScreenHeader
         title="CRM Pipeline"
-        subtitle={`${pipeline.reduce((s, c) => s + c.count, 0)} opportunities`}
+        subtitle={`${pipeline.reduce((s: number, c: { count: number }) => s + c.count, 0)} opportunities`}
       />
 
       {/* Search Bar */}
@@ -117,12 +117,13 @@ export default function CrmIndex() {
         <View style={styles.loadingContainer}>
           <View style={styles.skeletonColumns}>
             {[1, 2, 3].map((i) => (
-              <SkeletonLoader
-                key={i}
-                width={COLUMN_WIDTH}
-                height={400}
-                borderRadius={RADIUS.lg}
-              />
+              <View key={i}>
+                <SkeletonLoader
+                  width={COLUMN_WIDTH}
+                  height={400}
+                  borderRadius={RADIUS.lg}
+                />
+              </View>
             ))}
           </View>
         </View>
@@ -145,7 +146,7 @@ export default function CrmIndex() {
             />
           }
         >
-          {filteredPipeline.map((column) => (
+          {filteredPipeline.map((column: { id: number; title: string; count: number; totalRevenue: number; isWon: boolean; items: ICrmLead[] }) => (
             <View
               key={column.id}
               style={[
@@ -186,15 +187,16 @@ export default function CrmIndex() {
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled
               >
-                {column.items.map((lead) => (
-                  <LeadCard
-                    key={lead.id}
-                    lead={lead}
-                    stages={pipeline}
-                    currentStageId={column.id}
-                    onPress={() => router.push(`/(admin)/crm/${lead.id}`)}
-                    onMoveStage={(stageId) => handleMoveStage(lead, stageId)}
-                  />
+                {column.items.map((lead: ICrmLead) => (
+                  <View key={lead.id}>
+                    <LeadCard
+                      lead={lead}
+                      stages={pipeline}
+                      currentStageId={column.id}
+                      onPress={() => router.push(`/(admin)/crm/${lead.id}`)}
+                      onMoveStage={(stageId: number) => handleMoveStage(lead, stageId)}
+                    />
+                  </View>
                 ))}
                 {column.items.length === 0 && (
                   <View style={styles.emptyColumn}>
@@ -242,14 +244,14 @@ function LeadCard({ lead, stages, currentStageId, onPress, onMoveStage }: ILeadC
       onPress={onPress}
       activeOpacity={0.7}
       onLongPress={() => {
-        const otherStages = stages.filter((s) => s.id !== currentStageId);
+        const otherStages = stages.filter((s: { id: number; title: string }) => s.id !== currentStageId);
         if (otherStages.length === 0) return;
 
         Alert.alert(
           "Move to stage",
           `Move "${lead.name}" to:`,
           [
-            ...otherStages.map((s) => ({
+            ...otherStages.map((s: { id: number; title: string }) => ({
               text: s.title,
               onPress: () => onMoveStage(s.id),
             })),

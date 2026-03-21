@@ -37,14 +37,14 @@ export default function TasksIndex() {
   const filtered = useMemo(() => {
     let records = data?.records ?? [];
 
-    if (filter === "open") records = records.filter((t) => t.kanban_state !== "done");
-    else if (filter === "done") records = records.filter((t) => t.kanban_state === "done");
-    else if (filter === "blocked") records = records.filter((t) => t.kanban_state === "blocked");
+    if (filter === "open") records = records.filter((t: IEmployeeTask) => t.kanban_state !== "done");
+    else if (filter === "done") records = records.filter((t: IEmployeeTask) => t.kanban_state === "done");
+    else if (filter === "blocked") records = records.filter((t: IEmployeeTask) => t.kanban_state === "blocked");
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       records = records.filter(
-        (t) =>
+        (t: IEmployeeTask) =>
           t.name.toLowerCase().includes(q) ||
           t.project_id[1].toLowerCase().includes(q)
       );
@@ -54,7 +54,7 @@ export default function TasksIndex() {
   }, [data?.records, filter, searchQuery]);
 
   const renderItem: ListRenderItem<IEmployeeTask> = useCallback(
-    ({ item }) => <TaskRow task={item} />,
+    ({ item }: { item: IEmployeeTask }) => <TaskRow task={item} />,
     []
   );
 
@@ -118,7 +118,7 @@ export default function TasksIndex() {
       <OdooList
         data={filtered}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IEmployeeTask) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

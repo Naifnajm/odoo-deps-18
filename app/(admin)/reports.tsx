@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   RefreshControl,
   StyleSheet,
-  Dimensions,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQueryClient } from "@tanstack/react-query";
@@ -45,13 +44,13 @@ export default function ReportsScreen() {
 
   const revenueData = revenue.data ?? [];
   const maxRevenue = useMemo(
-    () => Math.max(...revenueData.map((r) => r.amount), 1),
+    () => Math.max(...revenueData.map((r: { amount: number }) => r.amount), 1),
     [revenueData]
   );
 
   const pipelineData = pipeline.data ?? [];
   const totalPipelineAmount = useMemo(
-    () => pipelineData.reduce((s, p) => s + p.amount, 0),
+    () => pipelineData.reduce((s: number, p: { amount: number }) => s + p.amount, 0),
     [pipelineData]
   );
 
@@ -155,7 +154,7 @@ export default function ReportsScreen() {
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>No revenue data</Text>
           ) : (
             <View style={styles.barChart}>
-              {revenueData.map((point, i) => {
+              {revenueData.map((point: { amount: number; month: string }, i: number) => {
                 const barHeight = (point.amount / maxRevenue) * 140;
                 return (
                   <View key={i} style={styles.barCol}>
@@ -189,7 +188,7 @@ export default function ReportsScreen() {
           ) : pipelineData.length === 0 ? (
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>No pipeline data</Text>
           ) : (
-            pipelineData.map((stage) => {
+            pipelineData.map((stage: { id: number; name: string; count: number; amount: number }) => {
               const pct = totalPipelineAmount > 0 ? (stage.amount / totalPipelineAmount) * 100 : 0;
               return (
                 <View key={stage.id} style={[styles.pipelineRow, { borderColor: colors.border }]}>

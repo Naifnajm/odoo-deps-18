@@ -179,8 +179,10 @@ export default function AdminInvoiceDetail() {
           {lines.isLoading ? (
             <SkeletonGroup count={3} itemHeight={50} />
           ) : (
-            (lines.data?.records ?? []).map((line) => (
-              <InvoiceLineRow key={line.id} line={line} colors={colors} />
+            (lines.data?.records ?? []).map((line: IInvoiceLine) => (
+              <View key={line.id}>
+                <InvoiceLineRow line={line} colors={colors} />
+              </View>
             ))
           )}
         </View>

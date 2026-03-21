@@ -28,7 +28,7 @@ import { KPICard } from "../../components/kpi-card";
 import { StatusBadge } from "../../components/status-badge";
 import { SkeletonLoader, SkeletonGroup } from "../../components/skeleton-loader";
 import { ProgressRing } from "../../components/progress-ring";
-import { MiniLineChart, MiniBarChart } from "../../components/mini-chart";
+import { MiniLineChart } from "../../components/mini-chart";
 import { ErrorFallback } from "../../components/error-boundary";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -37,7 +37,7 @@ const KPI_CARD_WIDTH = (SCREEN_WIDTH - SPACING.xl * 2 - SPACING.md) / 2;
 export default function AdminDashboard() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const user = useAuthStore((s) => s.user);
+  const user = useAuthStore((s: ReturnType<typeof useAuthStore.getState>) => s.user);
   const queryClient = useQueryClient();
 
   const kpis = useDashboardKPIs();
@@ -124,13 +124,14 @@ export default function AdminDashboard() {
 
       {kpis.isLoading ? (
         <View style={styles.kpiGrid}>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <SkeletonLoader
-              key={i}
-              width={KPI_CARD_WIDTH}
-              height={100}
-              borderRadius={RADIUS.md}
-            />
+          {Array.from({ length: 4 }).map((_, i: number) => (
+            <View key={i}>
+              <SkeletonLoader
+                width={KPI_CARD_WIDTH}
+                height={100}
+                borderRadius={RADIUS.md}
+              />
+            </View>
           ))}
         </View>
       ) : (
@@ -181,7 +182,7 @@ export default function AdminDashboard() {
         ) : revenue.data && revenue.data.length > 0 ? (
           <>
             <View style={styles.chartLabels}>
-              {revenue.data.slice(0, 6).map((point, i) => (
+              {revenue.data.slice(0, 6).map((point: { month: string; amount: number }, i: number) => (
                 <Text
                   key={i}
                   style={[styles.chartLabel, { color: colors.textMuted }]}
@@ -191,7 +192,7 @@ export default function AdminDashboard() {
               ))}
             </View>
             <MiniLineChart
-              data={revenue.data.map((p) => p.amount)}
+              data={revenue.data.map((p: { month: string; amount: number }) => p.amount)}
               width={SCREEN_WIDTH - SPACING.xl * 2 - SPACING.base * 2}
               height={120}
             />
@@ -220,8 +221,10 @@ export default function AdminDashboard() {
         <SkeletonGroup count={3} itemHeight={56} style={styles.pipelineList} />
       ) : (
         <View style={styles.pipelineList}>
-          {(pipeline.data ?? []).map((stage) => (
-            <PipelineRow key={stage.id} stage={stage} />
+          {(pipeline.data ?? []).map((stage: IPipelineStage) => (
+            <View key={stage.id}>
+              <PipelineRow stage={stage} />
+            </View>
           ))}
           {(pipeline.data ?? []).length === 0 && (
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>
@@ -297,8 +300,10 @@ export default function AdminDashboard() {
         <SkeletonGroup count={4} itemHeight={60} />
       ) : (
         <View>
-          {(activity.data ?? []).slice(0, 8).map((item) => (
-            <ActivityRow key={item.id} item={item} />
+          {(activity.data ?? []).slice(0, 8).map((item: IActivityItem) => (
+            <View key={item.id}>
+              <ActivityRow item={item} />
+            </View>
           ))}
           {(activity.data ?? []).length === 0 && (
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>

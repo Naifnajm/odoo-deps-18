@@ -25,7 +25,7 @@ export default function AdminProjectsIndex() {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, isLoading, isRefetching, isError, refetch } = useProjects();
+  const { data, isLoading, isRefetching, isError } = useProjects();
 
   const handleRefresh = useCallback(() => {
     queryClient.invalidateQueries({ queryKey: odooKeys.model("project.project") });
@@ -36,14 +36,14 @@ export default function AdminProjectsIndex() {
     if (!searchQuery.trim()) return records;
     const q = searchQuery.toLowerCase();
     return records.filter(
-      (p) =>
+      (p: IProject) =>
         p.name.toLowerCase().includes(q) ||
         (p.partner_id && p.partner_id[1].toLowerCase().includes(q))
     );
   }, [data?.records, searchQuery]);
 
   const renderItem: ListRenderItem<IProject> = useCallback(
-    ({ item }) => <ProjectRow project={item} />,
+    ({ item }: { item: IProject }) => <ProjectRow project={item} />,
     []
   );
 
@@ -84,7 +84,7 @@ export default function AdminProjectsIndex() {
       <OdooList
         data={filteredProjects}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IProject) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

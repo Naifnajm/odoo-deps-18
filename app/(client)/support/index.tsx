@@ -29,7 +29,7 @@ type TFilter = "all" | "open" | "closed";
 export default function SupportIndex() {
   const { colors } = useTheme();
   const queryClient = useQueryClient();
-  const partnerId = useAuthStore((s) => s.user?.partnerId);
+  const partnerId = useAuthStore((s: any) => s.user?.partnerId);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<TFilter>("all");
 

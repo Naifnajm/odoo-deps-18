@@ -33,35 +33,35 @@ export default function EmployeeLayout() {
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <TabIcon name="home" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="home" color={color} />,
         }}
       />
       <Tabs.Screen
         name="tasks"
         options={{
           title: "Tasks",
-          tabBarIcon: ({ color }) => <TabIcon name="tasks" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="tasks" color={color} />,
         }}
       />
       <Tabs.Screen
         name="projects"
         options={{
           title: "Projects",
-          tabBarIcon: ({ color }) => <TabIcon name="projects" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="projects" color={color} />,
         }}
       />
       <Tabs.Screen
         name="hr"
         options={{
           title: "HR",
-          tabBarIcon: ({ color }) => <TabIcon name="hr" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="hr" color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: "Settings",
-          tabBarIcon: ({ color }) => <TabIcon name="settings" color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <TabIcon name="settings" color={color} />,
         }}
       />
     </Tabs>

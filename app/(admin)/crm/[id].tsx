@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo } from "react";
+import { useCallback } from "react";
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   Alert,
   Linking,
 } from "react-native";
-import { useLocalSearchParams, router } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useTheme } from "../../../theme/theme";
@@ -17,7 +17,6 @@ import {
   useCrmLeadDetail,
   useCrmStages,
   useUpdateLead,
-  type ICrmLeadDetail,
   type ICrmStage,
 } from "../../../hooks/use-crm";
 import { ScreenHeader } from "../../../components/screen-header";
@@ -44,8 +43,8 @@ export default function CrmDetail() {
       `Current: ${lead.stage_id[1]}`,
       [
         ...stages.data.records
-          .filter((s) => s.id !== lead.stage_id[0])
-          .map((s) => ({
+          .filter((s: ICrmStage) => s.id !== lead.stage_id[0])
+          .map((s: ICrmStage) => ({
             text: s.name,
             onPress: () =>
               updateLead.mutate({ ids: [leadId], values: { stage_id: s.id } }),
@@ -278,7 +277,6 @@ export default function CrmDetail() {
             {lead.phone && (
               <ActionButton
                 label="Call"
-                colors={colors}
                 color={colors.success}
                 onPress={() => Linking.openURL(`tel:${lead.phone}`)}
               />
@@ -286,7 +284,6 @@ export default function CrmDetail() {
             {lead.email_from && (
               <ActionButton
                 label="Email"
-                colors={colors}
                 color={colors.blue}
                 onPress={() => Linking.openURL(`mailto:${lead.email_from}`)}
               />
@@ -294,7 +291,6 @@ export default function CrmDetail() {
             {(lead.phone || lead.mobile) && (
               <ActionButton
                 label="WhatsApp"
-                colors={colors}
                 color={colors.success}
                 onPress={() => {
                   const phone = (lead.mobile || lead.phone || "").replace(/[^0-9+]/g, "");
@@ -373,12 +369,10 @@ function InfoRow({
 function ActionButton({
   label,
   color,
-  colors,
   onPress,
 }: {
   label: string;
   color: string;
-  colors: Record<string, string>;
   onPress: () => void;
 }) {
   return (

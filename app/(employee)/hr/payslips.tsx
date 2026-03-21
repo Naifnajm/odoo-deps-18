@@ -8,11 +8,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { ListRenderItem } from "@shopify/flash-list";
 
 import { useTheme } from "../../../theme/theme";
-import { SPACING, RADIUS } from "../../../theme/spacing";
+import { SPACING } from "../../../theme/spacing";
 import { usePayslips, type IPayslip } from "../../../hooks/use-employee";
 import { odooKeys } from "../../../hooks/use-odoo-query";
 import { OdooList } from "../../../components/odoo-list";
-import { StatusBadge } from "../../../components/status-badge";
 import { ScreenHeader } from "../../../components/screen-header";
 
 export default function PayslipsScreen() {
@@ -26,7 +25,7 @@ export default function PayslipsScreen() {
   }, [queryClient]);
 
   const renderItem: ListRenderItem<IPayslip> = useCallback(
-    ({ item }) => <PayslipRow payslip={item} />,
+    ({ item }: { item: IPayslip }) => <PayslipRow payslip={item} />,
     []
   );
 
@@ -37,7 +36,7 @@ export default function PayslipsScreen() {
       <OdooList
         data={data?.records}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IPayslip) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}

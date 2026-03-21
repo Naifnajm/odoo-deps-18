@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -13,8 +13,6 @@ import { SPACING, RADIUS } from "../../../theme/spacing";
 import {
   useInvoiceDetail,
   useInvoiceLines,
-  type IInvoiceLine,
-  type TPaymentState,
 } from "../../../hooks/use-invoices";
 import { ScreenHeader } from "../../../components/screen-header";
 import { StatusBadge } from "../../../components/status-badge";
@@ -37,7 +35,7 @@ export default function ClientInvoiceDetail() {
   const insets = useSafeAreaInsets();
 
   const { data: invoice, isLoading, isError, refetch } = useInvoiceDetail(invoiceId);
-  const lines = useInvoiceLines(invoiceId);
+  const lines = useInvoiceLines(invoice?.invoice_line_ids ?? []);
 
   if (isError && !invoice) {
     return (
@@ -124,7 +122,7 @@ export default function ClientInvoiceDetail() {
           ) : (lines.data?.records ?? []).length === 0 ? (
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>No line items</Text>
           ) : (
-            (lines.data?.records ?? []).map((line) => (
+            (lines.data?.records ?? []).map((line: any) => (
               <View key={line.id} style={[styles.lineRow, { borderColor: colors.border }]}>
                 <View style={styles.lineLeft}>
                   <Text style={[styles.lineName, { color: colors.text }]} numberOfLines={2}>

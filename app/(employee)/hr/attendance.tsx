@@ -8,7 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { ListRenderItem } from "@shopify/flash-list";
 
 import { useTheme } from "../../../theme/theme";
-import { SPACING, RADIUS } from "../../../theme/spacing";
+import { SPACING } from "../../../theme/spacing";
 import { useAttendance, type IAttendance } from "../../../hooks/use-employee";
 import { odooKeys } from "../../../hooks/use-odoo-query";
 import { OdooList } from "../../../components/odoo-list";
@@ -27,12 +27,12 @@ export default function AttendanceScreen() {
   }, [queryClient]);
 
   const totalHours = useMemo(
-    () => (data?.records ?? []).reduce((s, a) => s + a.worked_hours, 0),
+    () => (data?.records ?? []).reduce((s: number, a: IAttendance) => s + a.worked_hours, 0),
     [data?.records]
   );
 
   const renderItem: ListRenderItem<IAttendance> = useCallback(
-    ({ item }) => <AttendanceRow attendance={item} />,
+    ({ item }: { item: IAttendance }) => <AttendanceRow attendance={item} />,
     []
   );
 
@@ -54,7 +54,7 @@ export default function AttendanceScreen() {
       <OdooList
         data={data?.records}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IAttendance) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}
@@ -85,7 +85,7 @@ function AttendanceRow({ attendance }: { attendance: IAttendance }) {
           </Text>
           <Text style={[styles.separator, { color: colors.textMuted }]}>{"\u2192"}</Text>
           <Text style={[styles.time, { color: colors.textMuted }]}>
-            {isOpen ? "..." : formatTime(attendance.check_out!)}
+            {isOpen ? "..." : formatTime(attendance.check_out as string)}
           </Text>
         </View>
       </View>
