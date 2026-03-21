@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useOdooSearchRead, useOdooDetail } from "./use-odoo-search";
 import { useOdooWrite } from "./use-odoo-mutation";
 import { odooKeys } from "./use-odoo-query";

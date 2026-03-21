@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, type ViewStyle } from "react-native";
 import Animated, {
   useSharedValue,
@@ -11,7 +11,8 @@ import Animated, {
 import { useTheme } from "../theme/theme";
 import { RADIUS } from "../theme/spacing";
 
-interface ISkeletonLoaderProps {
+export interface ISkeletonLoaderProps {
+  key?: React.Key;
   width: number | string;
   height: number;
   borderRadius?: number;

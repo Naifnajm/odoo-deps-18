@@ -19,6 +19,9 @@ interface IErrorBoundaryState {
 }
 
 export class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundaryState> {
+  declare state: IErrorBoundaryState;
+  declare props: IErrorBoundaryProps;
+
   constructor(props: IErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };

@@ -60,7 +60,7 @@ interface IAuthState {
   clearError: () => void;
 }
 
-export const useAuthStore = create<IAuthState>((set, get) => ({
+export const useAuthStore = create<IAuthState>((set) => ({
   isAuthenticated: false,
   isLoading: false,
   user: null,

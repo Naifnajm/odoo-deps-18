@@ -47,7 +47,7 @@ export const useTheme = (): IThemeContext => {
 };
 
 export const useAppTheme = (): ITheme & { mode: TThemeMode } => {
-  const mode = useThemeStore((s) => s.mode);
+  const mode = useThemeStore((s: any) => s.mode);
   const systemScheme = useColorScheme();
   const scheme = resolveColorScheme(mode, systemScheme);
   const theme = buildTheme(scheme);

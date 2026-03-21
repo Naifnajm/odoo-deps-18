@@ -35,7 +35,7 @@ export default function DocumentsScreen() {
     if (!searchQuery.trim()) return records;
     const q = searchQuery.toLowerCase();
     return records.filter(
-      (d: IClientDocument) => d.name.toLowerCase().includes(q) || (d.description ?? "").toLowerCase().includes(q)
+      (d: IClientDocument) => d.name.toLowerCase().includes(q) || ((d.description || "") as string).toLowerCase().includes(q)
     );
   }, [data?.records, searchQuery]);
 

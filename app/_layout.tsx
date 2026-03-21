@@ -11,9 +11,9 @@ import { useLanguageStore } from "../stores/language-store";
 
 function AppInner() {
   const theme = useAppTheme();
-  const setMode = useThemeStore((s) => s.setMode);
-  const initLanguage = useLanguageStore((s) => s.initialize);
-  const isArabic = useLanguageStore((s) => s.isArabic);
+  const setMode = useThemeStore((s: any) => s.setMode);
+  const initLanguage = useLanguageStore((s: any) => s.initialize);
+  const isArabic = useLanguageStore((s: any) => s.isArabic);
 
   useEffect(() => {
     initLanguage();

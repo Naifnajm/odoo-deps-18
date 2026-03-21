@@ -1,5 +1,4 @@
 import { useOdooSearchRead, useOdooDetail } from "./use-odoo-search";
-import { useOdooWrite } from "./use-odoo-mutation";
 import { useOdooMutation } from "./use-odoo-mutation";
 import { odooKeys } from "./use-odoo-query";
 import { STALE_TIMES } from "../services/query-client";

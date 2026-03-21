@@ -98,7 +98,7 @@ function AllocationCard({
   colors,
 }: {
   allocation: ILeaveAllocation;
-  colors: Record<string, string>;
+  colors: any;
 }) {
   const used = allocation.leaves_taken;
   const total = allocation.max_leaves;
@@ -128,7 +128,7 @@ function LeaveRequestRow({
   colors,
 }: {
   request: ILeaveRequest;
-  colors: Record<string, string>;
+  colors: any;
 }) {
   const stateVariant = getLeaveStateVariant(request.state);
   const stateLabel = getLeaveStateLabel(request.state);

@@ -14,7 +14,7 @@ interface ILanguageState {
   initialize: () => void;
 }
 
-export const useLanguageStore = create<ILanguageState>((set) => ({
+export const useLanguageStore = create<ILanguageState>((set: any) => ({
   language: "en",
   isArabic: false,
   isRTL: false,

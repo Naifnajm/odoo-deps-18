@@ -1,7 +1,6 @@
 import {
   useMutation,
   useQueryClient,
-  type UseMutationOptions,
   type UseMutationResult,
   type QueryKey,
 } from "@tanstack/react-query";
@@ -34,14 +33,14 @@ export function useOdooMutation<TData = unknown, TVariables = unknown>(
   const queryClient = useQueryClient();
 
   return useMutation<TData, OdooRpcError, TVariables>({
-    mutationFn: async (variables) => {
+    mutationFn: async (variables: TVariables) => {
       const { args, kwargs } = variables as unknown as {
         args: unknown[];
         kwargs?: Record<string, unknown>;
       };
       return odooRpc.callKw<TData>({ model, method, args, kwargs });
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (data: TData, variables: TVariables) => {
       // Invalidate related queries
       if (invalidateModel) {
         queryClient.invalidateQueries({ queryKey: odooKeys.model(model) });
@@ -53,7 +52,7 @@ export function useOdooMutation<TData = unknown, TVariables = unknown>(
       }
       onSuccess?.(data, variables);
     },
-    onError: (error, variables) => {
+    onError: (error: OdooRpcError, variables: TVariables) => {
       onError?.(error, variables);
     },
   });
@@ -76,10 +75,10 @@ export function useOdooCreate(
   const queryClient = useQueryClient();
 
   return useMutation<number, OdooRpcError, ICreateVariables>({
-    mutationFn: async ({ values }) => {
+    mutationFn: async ({ values }: ICreateVariables) => {
       return odooRpc.create(model, values);
     },
-    onSuccess: (id) => {
+    onSuccess: (id: number) => {
       queryClient.invalidateQueries({ queryKey: odooKeys.model(model) });
       options?.invalidateKeys?.forEach((key) => {
         queryClient.invalidateQueries({ queryKey: key });
@@ -114,10 +113,10 @@ export function useOdooWrite<T = unknown>(
   const queryClient = useQueryClient();
 
   return useMutation<boolean, OdooRpcError, IWriteVariables>({
-    mutationFn: async ({ ids, values }) => {
+    mutationFn: async ({ ids, values }: IWriteVariables) => {
       return odooRpc.write(model, ids, values);
     },
-    onMutate: async (variables) => {
+    onMutate: async (variables: IWriteVariables) => {
       if (!options?.optimistic) return;
 
       const { queryKey, updater } = options.optimistic;
@@ -130,14 +129,14 @@ export function useOdooWrite<T = unknown>(
 
       // Optimistically update
       if (previous !== undefined) {
-        queryClient.setQueryData<T>(queryKey, (old) =>
+        queryClient.setQueryData<T>(queryKey, (old: T | undefined) =>
           old !== undefined ? updater(old, variables) : old
         );
       }
 
       return { previous };
     },
-    onError: (error, _variables, context) => {
+    onError: (error: OdooRpcError, _variables: IWriteVariables, context: unknown) => {
       // Rollback optimistic update
       if (options?.optimistic && context) {
         const { queryKey } = options.optimistic;
@@ -173,7 +172,7 @@ export function useOdooDelete(
   const queryClient = useQueryClient();
 
   return useMutation<boolean, OdooRpcError, IDeleteVariables>({
-    mutationFn: async ({ ids }) => {
+    mutationFn: async ({ ids }: IDeleteVariables) => {
       return odooRpc.unlink(model, ids);
     },
     onSuccess: () => {

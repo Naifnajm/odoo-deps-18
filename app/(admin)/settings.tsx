@@ -20,9 +20,9 @@ import type { TThemeMode } from "../../types/theme";
 export default function AdminSettings() {
   const { colors, mode } = useTheme();
   const insets = useSafeAreaInsets();
-  const user = useAuthStore((s) => s.user);
-  const logout = useAuthStore((s) => s.logout);
-  const setThemeMode = useThemeStore((s) => s.setMode);
+  const user = useAuthStore((s: any) => s.user);
+  const logout = useAuthStore((s: any) => s.logout);
+  const setThemeMode = useThemeStore((s: any) => s.setMode);
 
   const handleLogout = useCallback(() => {
     Alert.alert("Logout", "Are you sure you want to log out?", [

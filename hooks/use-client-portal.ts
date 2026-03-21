@@ -1,6 +1,6 @@
 import { useOdooSearchRead, useOdooDetail } from "./use-odoo-search";
 import { useOdooQuery, odooKeys } from "./use-odoo-query";
-import { useOdooCreate, useOdooWrite } from "./use-odoo-mutation";
+import { useOdooCreate } from "./use-odoo-mutation";
 import { STALE_TIMES } from "../services/query-client";
 import { useAuthStore } from "../stores/auth-store";
 
@@ -66,7 +66,7 @@ const DOCUMENT_FIELDS = [
 // --- Hooks ---
 
 export function useClientTickets(domain: unknown[] = []) {
-  const partnerId = useAuthStore((s) => s.user?.partnerId);
+  const partnerId = useAuthStore((s: any) => s.user?.partnerId);
   return useOdooSearchRead<IClientTicket>({
     model: "helpdesk.ticket",
     domain: [["partner_id", "=", partnerId ?? 0], ...domain],
@@ -94,7 +94,7 @@ export function useCreateTicket() {
 }
 
 export function useClientDocuments() {
-  const partnerId = useAuthStore((s) => s.user?.partnerId);
+  const partnerId = useAuthStore((s: any) => s.user?.partnerId);
   return useOdooSearchRead<IClientDocument>({
     model: "ir.attachment",
     domain: [["partner_id", "=", partnerId ?? 0], ["res_model", "!=", false]],

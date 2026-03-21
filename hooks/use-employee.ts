@@ -112,7 +112,7 @@ const ATTENDANCE_FIELDS = [
 // --- Hooks ---
 
 export function useMyTasks(domain: unknown[] = []) {
-  const uid = useAuthStore((s) => s.user?.uid);
+  const uid = useAuthStore((s: any) => s.user?.uid);
   return useOdooSearchRead<IEmployeeTask>({
     model: "project.task",
     domain: [["user_ids", "in", [uid ?? 0]], ...domain],
@@ -134,7 +134,7 @@ export function useMyTaskDetail(id: number) {
 }
 
 export function useLeaveAllocations() {
-  const uid = useAuthStore((s) => s.user?.uid);
+  const uid = useAuthStore((s: any) => s.user?.uid);
   return useOdooSearchRead<ILeaveAllocation>({
     model: "hr.leave.allocation",
     domain: [["employee_id.user_id", "=", uid ?? 0], ["state", "=", "validate"]],
@@ -147,7 +147,7 @@ export function useLeaveAllocations() {
 }
 
 export function useLeaveRequests() {
-  const uid = useAuthStore((s) => s.user?.uid);
+  const uid = useAuthStore((s: any) => s.user?.uid);
   return useOdooSearchRead<ILeaveRequest>({
     model: "hr.leave",
     domain: [["employee_id.user_id", "=", uid ?? 0]],
@@ -166,7 +166,7 @@ export function useCreateLeaveRequest() {
 }
 
 export function usePayslips() {
-  const uid = useAuthStore((s) => s.user?.uid);
+  const uid = useAuthStore((s: any) => s.user?.uid);
   return useOdooSearchRead<IPayslip>({
     model: "hr.payslip",
     domain: [["employee_id.user_id", "=", uid ?? 0], ["state", "=", "done"]],
@@ -179,7 +179,7 @@ export function usePayslips() {
 }
 
 export function useAttendance() {
-  const uid = useAuthStore((s) => s.user?.uid);
+  const uid = useAuthStore((s: any) => s.user?.uid);
   return useOdooSearchRead<IAttendance>({
     model: "hr.attendance",
     domain: [["employee_id.user_id", "=", uid ?? 0]],

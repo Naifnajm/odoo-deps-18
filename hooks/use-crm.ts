@@ -1,11 +1,10 @@
-import { useMemo, useCallback } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
 import {
   useOdooSearchRead,
   useOdooDetail,
 } from "./use-odoo-search";
 import { useOdooWrite } from "./use-odoo-mutation";
-import { useOdooQuery, odooKeys } from "./use-odoo-query";
+import { odooKeys } from "./use-odoo-query";
 import { STALE_TIMES } from "../services/query-client";
 
 // --- CRM Types ---
@@ -144,21 +143,21 @@ export function useCrmPipeline(domain: unknown[] = []) {
   const pipeline = useMemo(() => {
     if (!stages.data?.records || !leads.data?.records) return [];
 
-    return stages.data.records.map((stage) => ({
+    return stages.data.records.map((stage: ICrmStage) => ({
       id: stage.id,
       title: stage.name,
       count: 0,
       totalRevenue: 0,
       isWon: stage.is_won,
       items: [] as ICrmLead[],
-    })).map((column) => {
+    })).map((column: any) => {
       const stageLeads = leads.data!.records.filter(
-        (lead) => lead.stage_id[0] === column.id
+        (lead: ICrmLead) => lead.stage_id[0] === column.id
       );
       return {
         ...column,
         count: stageLeads.length,
-        totalRevenue: stageLeads.reduce((sum, l) => sum + l.expected_revenue, 0),
+        totalRevenue: stageLeads.reduce((sum: number, l: ICrmLead) => sum + l.expected_revenue, 0),
         items: stageLeads,
       };
     });

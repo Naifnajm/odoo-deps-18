@@ -1,8 +1,7 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { View, Text, StyleSheet, type ViewStyle } from "react-native";
 import Animated, {
   useSharedValue,
-  useAnimatedProps,
   withTiming,
   Easing,
   useDerivedValue,
@@ -20,8 +19,6 @@ interface IKPICardProps {
   trendValue?: string;
   style?: ViewStyle;
 }
-
-const AnimatedText = Animated.createAnimatedComponent(Text);
 
 export function KPICard({
   label,
@@ -88,7 +85,7 @@ interface IAnimatedCountUpProps {
 }
 
 function AnimatedCountUp({ value, prefix, suffix, textColor }: IAnimatedCountUpProps) {
-  const [displayText, setDisplayText] = useAnimatedText(value, prefix, suffix);
+  const [displayText] = useAnimatedText(value, prefix, suffix);
 
   return (
     <Text style={[styles.value, { color: textColor }]}>{displayText}</Text>
@@ -100,7 +97,7 @@ function useAnimatedText(
   prefix: string,
   suffix: string
 ): [string, (text: string) => void] {
-  const [text, setText] = require("react").useState(`${prefix}0${suffix}`);
+  const [text, setText] = useState(`${prefix}0${suffix}`);
 
   const updateText = useCallback((t: string) => setText(t), []);
 

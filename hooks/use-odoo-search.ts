@@ -15,7 +15,7 @@ import type {
 
 // --- useOdooSearchRead ---
 
-interface ISearchReadOptions<T> {
+interface ISearchReadOptions<_T> {
   model: string;
   domain: unknown[];
   fields: string[];
@@ -77,7 +77,7 @@ export function useOdooSearchRead<T = Record<string, unknown>>(
 
 // --- useOdooInfiniteList (infinite scroll) ---
 
-interface IInfiniteListOptions<T> {
+interface IInfiniteListOptions<_T> {
   model: string;
   domain: unknown[];
   fields: string[];
@@ -112,7 +112,7 @@ export function useOdooInfiniteList<T = Record<string, unknown>>(
     number
   >({
     queryKey: key,
-    queryFn: async ({ pageParam }) => {
+    queryFn: async ({ pageParam }: { pageParam: number }) => {
       return odooRpc.searchReadPaginated<T>({
         model,
         domain,
@@ -124,13 +124,13 @@ export function useOdooInfiniteList<T = Record<string, unknown>>(
       });
     },
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
+    getNextPageParam: (lastPage: IOdooPaginatedResult<T>) => {
       if (!lastPage.hasMore) return undefined;
       return lastPage.offset + pageSize;
     },
     staleTime,
     enabled,
-    select: (data) => ({
+    select: (data: any) => ({
       pages: data.pages,
       pageParams: data.pageParams,
     }),
@@ -139,7 +139,7 @@ export function useOdooInfiniteList<T = Record<string, unknown>>(
 
 // --- useOdooDetail (single record) ---
 
-interface IDetailOptions<T> {
+interface IDetailOptions<_T> {
   model: string;
   id: number;
   fields: string[];
