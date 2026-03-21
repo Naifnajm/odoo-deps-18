@@ -6,3 +6,4 @@ export {
   useOdooWrite,
   useOdooDelete,
 } from "./use-odoo-mutation";
+export { useRoleRedirect, useAuthGuard } from "./use-role-redirect";
