@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { useTheme } from "../../theme/theme";
 import { useAuthGuard } from "../../hooks/use-role-redirect";
+import { TabIcon } from "../../components/tab-icon";
 import { SPACING } from "../../theme/spacing";
 
 export default function AdminLayout() {
@@ -30,27 +31,45 @@ export default function AdminLayout() {
     >
       <Tabs.Screen
         name="dashboard"
-        options={{ title: "Dashboard" }}
+        options={{
+          title: "Dashboard",
+          tabBarIcon: ({ color }) => <TabIcon name="dashboard" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="crm"
-        options={{ title: "CRM" }}
+        options={{
+          title: "CRM",
+          tabBarIcon: ({ color }) => <TabIcon name="crm" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="projects"
-        options={{ title: "Projects" }}
+        options={{
+          title: "Projects",
+          tabBarIcon: ({ color }) => <TabIcon name="projects" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="invoices"
-        options={{ title: "Invoices" }}
+        options={{
+          title: "Invoices",
+          tabBarIcon: ({ color }) => <TabIcon name="invoices" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="reports"
-        options={{ title: "Reports" }}
+        options={{
+          title: "Reports",
+          tabBarIcon: ({ color }) => <TabIcon name="reports" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="settings"
-        options={{ title: "Settings" }}
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color }) => <TabIcon name="settings" color={color} />,
+        }}
       />
     </Tabs>
   );

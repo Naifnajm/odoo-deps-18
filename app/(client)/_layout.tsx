@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { useTheme } from "../../theme/theme";
 import { useAuthGuard } from "../../hooks/use-role-redirect";
+import { TabIcon } from "../../components/tab-icon";
 import { SPACING } from "../../theme/spacing";
 
 export default function ClientLayout() {
@@ -30,23 +31,38 @@ export default function ClientLayout() {
     >
       <Tabs.Screen
         name="projects"
-        options={{ title: "Projects" }}
+        options={{
+          title: "Projects",
+          tabBarIcon: ({ color }) => <TabIcon name="projects" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="invoices"
-        options={{ title: "Invoices" }}
+        options={{
+          title: "Invoices",
+          tabBarIcon: ({ color }) => <TabIcon name="invoices" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="support"
-        options={{ title: "Support" }}
+        options={{
+          title: "Support",
+          tabBarIcon: ({ color }) => <TabIcon name="support" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="documents"
-        options={{ title: "Documents" }}
+        options={{
+          title: "Documents",
+          tabBarIcon: ({ color }) => <TabIcon name="documents" color={color} />,
+        }}
       />
       <Tabs.Screen
         name="profile"
-        options={{ title: "Profile" }}
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => <TabIcon name="profile" color={color} />,
+        }}
       />
     </Tabs>
   );
