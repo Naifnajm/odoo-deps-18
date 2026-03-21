@@ -61,7 +61,7 @@ class OdooRpcService {
 
     // Response interceptor: extract session cookie, handle errors
     this.client.interceptors.response.use(
-      (response) => {
+      (response: any) => {
         const setCookie = response.headers["set-cookie"];
         if (setCookie) {
           const sessionMatch = Array.isArray(setCookie)
@@ -387,7 +387,7 @@ class OdooRpcService {
 
   // --- Reports ---
 
-  async getReportUrl(
+  getReportUrl(
     reportName: string,
     recordIds: number[],
     format: "pdf" | "html" = "pdf"

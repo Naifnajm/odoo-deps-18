@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import {
   View,
   Text,
@@ -18,13 +18,13 @@ interface IErrorBoundaryState {
   error: Error | null;
 }
 
-export class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundaryState> {
-  declare state: IErrorBoundaryState;
+export class ErrorBoundary extends React.Component<IErrorBoundaryProps, IErrorBoundaryState> {
   declare props: IErrorBoundaryProps;
+  declare setState: (state: Partial<IErrorBoundaryState>) => void;
+  state: IErrorBoundaryState = { hasError: false, error: null };
 
   constructor(props: IErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, error: null };
   }
 
   static getDerivedStateFromError(error: Error): IErrorBoundaryState {

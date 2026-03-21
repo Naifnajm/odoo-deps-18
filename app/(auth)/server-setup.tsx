@@ -98,7 +98,7 @@ export default function ServerSetupScreen() {
               },
             ]}
             value={url}
-            onChangeText={(text) => {
+            onChangeText={(text: string) => {
               setUrl(text);
               setError(null);
               setServerVersion(null);

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -91,7 +91,7 @@ export function OdooForm({
           key={field.name}
           field={field}
           value={values[field.name]}
-          onChange={(val) => onChange(field.name, val)}
+          onChange={(val: unknown) => onChange(field.name, val)}
         />
       ))}
 
@@ -118,6 +118,7 @@ export function OdooForm({
 // --- Individual Field Renderer ---
 
 interface IFormFieldProps {
+  key?: React.Key;
   field: TFormField;
   value: unknown;
   onChange: (value: unknown) => void;
@@ -216,7 +217,7 @@ function FormField({ field, value, onChange }: IFormFieldProps) {
           field.readonly && { opacity: 0.6 },
         ]}
         value={String(value ?? "")}
-        onChangeText={(text) =>
+        onChangeText={(text: string) =>
           onChange(field.type === "number" ? Number(text) || 0 : text)
         }
         placeholder={field.placeholder ?? field.label}

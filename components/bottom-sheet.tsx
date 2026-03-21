@@ -65,11 +65,11 @@ export function BottomSheet({
     .onStart(() => {
       context.value = { y: translateY.value };
     })
-    .onUpdate((event) => {
+    .onUpdate((event: any) => {
       const newY = context.value.y + event.translationY;
       translateY.value = Math.max(0, newY);
     })
-    .onEnd((event) => {
+    .onEnd((event: any) => {
       if (event.translationY > sheetHeight * 0.3 || event.velocityY > 500) {
         runOnJS(handleClose)();
       } else {

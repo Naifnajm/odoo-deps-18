@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -12,11 +12,11 @@ import { SPACING } from "../theme/spacing";
 
 type TNetworkStatus = "online" | "offline" | "reconnecting";
 
-interface INetworkBannerProps {
-  status: TNetworkStatus;
+export interface INetworkBannerProps {
+  status?: TNetworkStatus;
 }
 
-export function NetworkBanner({ status }: INetworkBannerProps) {
+export function NetworkBanner({ status = "online" }: INetworkBannerProps) {
   const { colors } = useTheme();
   const translateY = useSharedValue(-50);
   const pulseOpacity = useSharedValue(1);

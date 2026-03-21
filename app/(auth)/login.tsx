@@ -29,12 +29,12 @@ import { SPACING, RADIUS } from "../../theme/spacing";
 
 export default function LoginScreen() {
   const { colors } = useTheme();
-  const login = useAuthStore((s) => s.login);
-  const isLoading = useAuthStore((s) => s.isLoading);
-  const authError = useAuthStore((s) => s.error);
-  const clearError = useAuthStore((s) => s.clearError);
-  const language = useLanguageStore((s) => s.language);
-  const setLanguage = useLanguageStore((s) => s.setLanguage);
+  const login = useAuthStore((s: any) => s.login);
+  const isLoading = useAuthStore((s: any) => s.isLoading);
+  const authError = useAuthStore((s: any) => s.error);
+  const clearError = useAuthStore((s: any) => s.clearError);
+  const language = useLanguageStore((s: any) => s.language);
+  const setLanguage = useLanguageStore((s: any) => s.setLanguage);
 
   const [serverUrl, setServerUrl] = useState("");
   const [database, setDatabase] = useState("");
@@ -151,7 +151,7 @@ export default function LoginScreen() {
 
       const role = useAuthStore.getState().role;
       if (role) {
-        router.replace(ROLE_INITIAL_ROUTE[role] as never);
+        router.replace(ROLE_INITIAL_ROUTE[role as keyof typeof ROLE_INITIAL_ROUTE] as never);
       }
     } catch {
       triggerShake();
@@ -173,7 +173,7 @@ export default function LoginScreen() {
           await login({ db, login: creds.username, password: creds.password });
           const role = useAuthStore.getState().role;
           if (role) {
-            router.replace(ROLE_INITIAL_ROUTE[role] as never);
+            router.replace(ROLE_INITIAL_ROUTE[role as keyof typeof ROLE_INITIAL_ROUTE] as never);
           }
         } catch {
           triggerShake();
@@ -266,7 +266,7 @@ export default function LoginScreen() {
                 showsHorizontalScrollIndicator={false}
                 style={styles.dbList}
               >
-                {databases.map((db) => (
+                {databases.map((db: string) => (
                   <TouchableOpacity
                     key={db}
                     style={[
@@ -343,7 +343,7 @@ export default function LoginScreen() {
                 },
               ]}
               value={username}
-              onChangeText={(text) => {
+              onChangeText={(text: string) => {
                 setUsername(text);
                 clearError();
               }}
@@ -375,7 +375,7 @@ export default function LoginScreen() {
                   },
                 ]}
                 value={password}
-                onChangeText={(text) => {
+                onChangeText={(text: string) => {
                   setPassword(text);
                   clearError();
                 }}
@@ -401,7 +401,7 @@ export default function LoginScreen() {
           <View style={styles.rememberRow}>
             <Switch
               value={rememberMe}
-              onValueChange={(val) => {
+              onValueChange={(val: boolean) => {
                 setRememberMe(val);
                 secureStorage.setRememberMe(val);
               }}

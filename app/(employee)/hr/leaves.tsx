@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import {
   View,
   Text,
@@ -97,6 +97,7 @@ function AllocationCard({
   allocation,
   colors,
 }: {
+  key?: React.Key;
   allocation: ILeaveAllocation;
   colors: any;
 }) {
@@ -127,6 +128,7 @@ function LeaveRequestRow({
   request,
   colors,
 }: {
+  key?: React.Key;
   request: ILeaveRequest;
   colors: any;
 }) {

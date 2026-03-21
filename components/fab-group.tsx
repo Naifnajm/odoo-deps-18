@@ -70,7 +70,7 @@ export function FABGroup({ actions, mainIcon = "+" }: IFABGroupProps) {
 
       <View style={styles.container}>
         {/* Action buttons */}
-        {actions.map((action, index) => {
+        {actions.map((action, _index) => {
           const actionStyle = useAnimatedStyle(() => ({
             opacity: animation.value,
             transform: [

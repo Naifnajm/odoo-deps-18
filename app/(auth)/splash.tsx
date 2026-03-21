@@ -8,7 +8,6 @@ import Animated, {
   withSequence,
   withDelay,
   Easing,
-  runOnJS,
 } from "react-native-reanimated";
 import { useTheme } from "../../theme/theme";
 import { useAuthStore } from "../../stores/auth-store";
@@ -18,7 +17,7 @@ const SPLASH_DURATION = 2500;
 
 export default function SplashScreen() {
   const { colors } = useTheme();
-  const restoreSession = useAuthStore((s) => s.restoreSession);
+  const restoreSession = useAuthStore((s: any) => s.restoreSession);
 
   const logoScale = useSharedValue(0.3);
   const logoOpacity = useSharedValue(0);
@@ -52,7 +51,7 @@ export default function SplashScreen() {
         if (restored) {
           const role = useAuthStore.getState().role;
           if (role) {
-            router.replace(ROLE_INITIAL_ROUTE[role] as never);
+            router.replace(ROLE_INITIAL_ROUTE[role as keyof typeof ROLE_INITIAL_ROUTE] as never);
             return;
           }
         }

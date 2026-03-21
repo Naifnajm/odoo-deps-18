@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { useTheme } from "../theme/theme";
-import { SPACING, RADIUS } from "../theme/spacing";
+import { SPACING } from "../theme/spacing";
 
 interface IScreenHeaderProps {
   title: string;

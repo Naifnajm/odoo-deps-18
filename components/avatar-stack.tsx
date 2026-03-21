@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, type ViewStyle } from "react-native";
 import { Image } from "expo-image";
 import { useTheme } from "../theme/theme";
-import { RADIUS } from "../theme/spacing";
+// theme spacing not used directly
 
 interface IAvatarItem {
   id: number;

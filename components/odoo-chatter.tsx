@@ -33,7 +33,7 @@ interface IOdooChatterProps {
 
 export function OdooChatter({
   messages,
-  isLoading = false,
+  isLoading: _isLoading = false,
   onSendMessage,
   onLogNote,
   isSending = false,
@@ -188,7 +188,7 @@ export function OdooChatter({
       <FlashList
         data={messages}
         renderItem={renderMessage}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IChatterMessage) => String(item.id)}
         estimatedItemSize={100}
         scrollEnabled={false}
       />
