@@ -21,3 +21,17 @@ export {
   useMoveLeadStage,
   useUpdateLead,
 } from "./use-crm";
+export {
+  useProjects,
+  useProjectDetail,
+  useProjectTasks,
+  useUpdateProject,
+  useUpdateTask,
+} from "./use-projects";
+export {
+  useInvoices,
+  useInvoiceDetail,
+  useInvoiceLines,
+  useConfirmInvoice,
+  useRegisterPayment,
+} from "./use-invoices";
