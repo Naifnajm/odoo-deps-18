@@ -47,3 +47,10 @@ export {
   useEmployeeHomeSummary,
   useUpdateMyTask,
 } from "./use-employee";
+export {
+  useClientTickets,
+  useClientTicketDetail,
+  useCreateTicket,
+  useClientDocuments,
+  useClientPortalSummary,
+} from "./use-client-portal";
