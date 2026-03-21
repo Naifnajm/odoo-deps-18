@@ -6,6 +6,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { StyleSheet } from "react-native";
 import { queryClient } from "../services/query-client";
 import { useAppTheme, ThemeProvider } from "../theme/theme";
+import { NetworkBanner } from "../components/network-banner";
 import { useThemeStore } from "../stores/theme-store";
 import { useLanguageStore } from "../stores/language-store";
 
@@ -30,6 +31,7 @@ function AppInner() {
   return (
     <ThemeProvider value={themeContext}>
       <StatusBar style={theme.isDark ? "light" : "dark"} />
+      <NetworkBanner />
       <Stack
         screenOptions={{
           headerShown: false,
