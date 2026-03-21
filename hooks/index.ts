@@ -7,3 +7,9 @@ export {
   useOdooDelete,
 } from "./use-odoo-mutation";
 export { useRoleRedirect, useAuthGuard } from "./use-role-redirect";
+export {
+  useDashboardKPIs,
+  useRevenueChart,
+  usePipelineSummary,
+  useRecentActivity,
+} from "./use-dashboard-data";
