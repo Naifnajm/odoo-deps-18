@@ -48,7 +48,7 @@ export default function SupportIndex() {
         { text: "Cancel", style: "cancel" },
         {
           text: "Create",
-          onPress: (text) => {
+          onPress: (text: string) => {
             if (text?.trim()) {
               createTicket.mutate(
                 { values: { name: text.trim(), partner_id: partnerId } },
@@ -65,24 +65,24 @@ export default function SupportIndex() {
   const filtered = useMemo(() => {
     let records = data?.records ?? [];
 
-    if (filter === "open") records = records.filter((t) => !t.close_date);
-    else if (filter === "closed") records = records.filter((t) => !!t.close_date);
+    if (filter === "open") records = records.filter((t: IClientTicket) => !t.close_date);
+    else if (filter === "closed") records = records.filter((t: IClientTicket) => !!t.close_date);
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      records = records.filter((t) => t.name.toLowerCase().includes(q));
+      records = records.filter((t: IClientTicket) => t.name.toLowerCase().includes(q));
     }
 
     return records;
   }, [data?.records, filter, searchQuery]);
 
   const openCount = useMemo(
-    () => (data?.records ?? []).filter((t) => !t.close_date).length,
+    () => (data?.records ?? []).filter((t: IClientTicket) => !t.close_date).length,
     [data?.records]
   );
 
   const renderItem: ListRenderItem<IClientTicket> = useCallback(
-    ({ item }) => <TicketRow ticket={item} />,
+    ({ item }: { item: IClientTicket }) => <TicketRow ticket={item} />,
     []
   );
 
@@ -142,7 +142,7 @@ export default function SupportIndex() {
       <OdooList
         data={filtered}
         renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(item: IClientTicket) => String(item.id)}
         isLoading={isLoading}
         isRefreshing={isRefetching}
         onRefresh={handleRefresh}
