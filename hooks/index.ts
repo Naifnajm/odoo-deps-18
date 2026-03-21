@@ -13,3 +13,11 @@ export {
   usePipelineSummary,
   useRecentActivity,
 } from "./use-dashboard-data";
+export {
+  useCrmStages,
+  useCrmLeads,
+  useCrmLeadDetail,
+  useCrmPipeline,
+  useMoveLeadStage,
+  useUpdateLead,
+} from "./use-crm";
