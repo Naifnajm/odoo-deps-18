@@ -1,5 +1,16 @@
 import * as SecureStore from "expo-secure-store";
-import { MMKV } from "react-native-mmkv";
+import { Platform } from "react-native";
+
+// MMKV for native, localStorage fallback for web
+let mmkvInstance: any = null;
+if (Platform.OS !== "web") {
+  try {
+    const { MMKV } = require("react-native-mmkv");
+    mmkvInstance = new MMKV({ id: "odoo-mobile-cache" });
+  } catch {
+    mmkvInstance = null;
+  }
+}
 
 // --- Secure Store (credentials, tokens) ---
 
@@ -88,19 +99,27 @@ export const secureStorage = {
   },
 };
 
-// --- MMKV (offline cache, preferences) ---
+// --- Cache storage (MMKV on native, localStorage on web) ---
 
-export const mmkvStorage = new MMKV({
-  id: "odoo-mobile-cache",
-});
+export const mmkvStorage = mmkvInstance;
 
 export const cacheStorage = {
   set(key: string, value: unknown): void {
-    mmkvStorage.set(key, JSON.stringify(value));
+    const str = JSON.stringify(value);
+    if (mmkvInstance) {
+      mmkvInstance.set(key, str);
+    } else if (typeof localStorage !== "undefined") {
+      localStorage.setItem(key, str);
+    }
   },
 
   get<T>(key: string): T | null {
-    const raw = mmkvStorage.getString(key);
+    let raw: string | null | undefined;
+    if (mmkvInstance) {
+      raw = mmkvInstance.getString(key);
+    } else if (typeof localStorage !== "undefined") {
+      raw = localStorage.getItem(key);
+    }
     if (!raw) return null;
     try {
       return JSON.parse(raw) as T;
@@ -110,11 +129,19 @@ export const cacheStorage = {
   },
 
   remove(key: string): void {
-    mmkvStorage.delete(key);
+    if (mmkvInstance) {
+      mmkvInstance.delete(key);
+    } else if (typeof localStorage !== "undefined") {
+      localStorage.removeItem(key);
+    }
   },
 
   clearAll(): void {
-    mmkvStorage.clearAll();
+    if (mmkvInstance) {
+      mmkvInstance.clearAll();
+    } else if (typeof localStorage !== "undefined") {
+      localStorage.clear();
+    }
   },
 
   getCacheKey(model: string, method: string, args: unknown[]): string {

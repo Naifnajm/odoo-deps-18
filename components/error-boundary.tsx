@@ -19,8 +19,6 @@ interface IErrorBoundaryState {
 }
 
 export class ErrorBoundary extends React.Component<IErrorBoundaryProps, IErrorBoundaryState> {
-  declare props: IErrorBoundaryProps;
-  declare setState: (state: Partial<IErrorBoundaryState>) => void;
   state: IErrorBoundaryState = { hasError: false, error: null };
 
   constructor(props: IErrorBoundaryProps) {
