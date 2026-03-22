@@ -26,15 +26,26 @@ const SECURE_KEYS = {
 
 export const secureStorage = {
   async set(key: string, value: string): Promise<void> {
-    await SecureStore.setItemAsync(key, value);
+    if (Platform.OS === "web") {
+      localStorage.setItem(key, value);
+    } else {
+      await SecureStore.setItemAsync(key, value);
+    }
   },
 
   async get(key: string): Promise<string | null> {
+    if (Platform.OS === "web") {
+      return localStorage.getItem(key);
+    }
     return SecureStore.getItemAsync(key);
   },
 
   async remove(key: string): Promise<void> {
-    await SecureStore.deleteItemAsync(key);
+    if (Platform.OS === "web") {
+      localStorage.removeItem(key);
+    } else {
+      await SecureStore.deleteItemAsync(key);
+    }
   },
 
   async getServerUrl(): Promise<string | null> {
