@@ -4,20 +4,20 @@ import { Text, StyleSheet } from "react-native";
 // Swap for @expo/vector-icons if installed.
 
 const ICON_MAP: Record<string, string> = {
-  // Admin tabs
+  // Main tabs
+  home: "\u2302",        // ⌂
+  apps: "\u25A0",        // ■
+  notifications: "\u2709", // ✉
+  settings: "\u2699",    // ⚙
+
+  // Legacy tabs (kept for compatibility)
   dashboard: "\u25A0",   // ■
   crm: "\u2661",         // ♡
   projects: "\u2630",    // ☰
   invoices: "\u2709",    // ✉
   reports: "\u2637",     // ☷
-  settings: "\u2699",    // ⚙
-
-  // Employee tabs
-  home: "\u2302",        // ⌂
   tasks: "\u2713",       // ✓
   hr: "\u263A",          // ☺
-
-  // Client tabs
   support: "\u2706",     // ✆
   documents: "\u2637",   // ☷
   profile: "\u2603",     // ☃

@@ -105,6 +105,10 @@ class OdooRpcService {
     return this.baseUrl;
   }
 
+  getSessionId(): string {
+    return this.sessionId;
+  }
+
   isConfigured(): boolean {
     return this.baseUrl.length > 0;
   }

@@ -24,7 +24,7 @@ import { useAuthStore } from "../../stores/auth-store";
 import { useLanguageStore } from "../../stores/language-store";
 import { odooRpc } from "../../services/odoo-rpc";
 import { secureStorage } from "../../utils/storage";
-import { ROLE_INITIAL_ROUTE } from "../../constants/navigation";
+import { MAIN_ROUTE } from "../../constants/navigation";
 import { SPACING, RADIUS } from "../../theme/spacing";
 
 export default function LoginScreen() {
@@ -149,10 +149,7 @@ export default function LoginScreen() {
     try {
       await login({ db: database, login: username, password });
 
-      const role = useAuthStore.getState().role;
-      if (role) {
-        router.replace(ROLE_INITIAL_ROUTE[role as keyof typeof ROLE_INITIAL_ROUTE] as never);
-      }
+      router.replace(MAIN_ROUTE as never);
     } catch {
       triggerShake();
     }
@@ -171,10 +168,7 @@ export default function LoginScreen() {
       if (creds && db) {
         try {
           await login({ db, login: creds.username, password: creds.password });
-          const role = useAuthStore.getState().role;
-          if (role) {
-            router.replace(ROLE_INITIAL_ROUTE[role as keyof typeof ROLE_INITIAL_ROUTE] as never);
-          }
+          router.replace(MAIN_ROUTE as never);
         } catch {
           triggerShake();
         }

@@ -7,38 +7,18 @@ export interface ITabConfig {
   iconFocused: string;
 }
 
-export const ADMIN_TABS: ITabConfig[] = [
-  { name: "dashboard", title: "nav.dashboard", icon: "grid-outline", iconFocused: "grid" },
-  { name: "crm", title: "nav.crm", icon: "people-outline", iconFocused: "people" },
-  { name: "projects", title: "nav.projects", icon: "folder-outline", iconFocused: "folder" },
-  { name: "invoices", title: "nav.invoices", icon: "receipt-outline", iconFocused: "receipt" },
-  { name: "settings", title: "nav.settings", icon: "settings-outline", iconFocused: "settings" },
-];
-
-export const EMPLOYEE_TABS: ITabConfig[] = [
+export const MAIN_TABS: ITabConfig[] = [
   { name: "home", title: "nav.home", icon: "home-outline", iconFocused: "home" },
-  { name: "tasks", title: "nav.tasks", icon: "checkbox-outline", iconFocused: "checkbox" },
-  { name: "projects", title: "nav.projects", icon: "folder-outline", iconFocused: "folder" },
-  { name: "hr", title: "nav.hr", icon: "briefcase-outline", iconFocused: "briefcase" },
+  { name: "apps", title: "nav.apps", icon: "grid-outline", iconFocused: "grid" },
+  { name: "notifications", title: "nav.inbox", icon: "mail-outline", iconFocused: "mail" },
   { name: "settings", title: "nav.settings", icon: "settings-outline", iconFocused: "settings" },
 ];
 
-export const CLIENT_TABS: ITabConfig[] = [
-  { name: "projects", title: "nav.projects", icon: "folder-outline", iconFocused: "folder" },
-  { name: "invoices", title: "nav.invoices", icon: "receipt-outline", iconFocused: "receipt" },
-  { name: "support", title: "nav.support", icon: "chatbubble-outline", iconFocused: "chatbubble" },
-  { name: "documents", title: "nav.documents", icon: "document-outline", iconFocused: "document" },
-  { name: "profile", title: "nav.profile", icon: "person-outline", iconFocused: "person" },
-];
-
+// All roles now redirect to the same main layout
 export const ROLE_INITIAL_ROUTE: Record<TUserRole, string> = {
-  admin: "/(admin)/dashboard",
-  employee: "/(employee)/home",
-  client: "/(client)/projects",
+  admin: "/(main)/home",
+  employee: "/(main)/home",
+  client: "/(main)/home",
 };
 
-export const ROLE_GROUP: Record<TUserRole, string> = {
-  admin: "(admin)",
-  employee: "(employee)",
-  client: "(client)",
-};
+export const MAIN_ROUTE = "/(main)/home";

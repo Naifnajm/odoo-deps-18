@@ -11,7 +11,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useTheme } from "../../theme/theme";
 import { useAuthStore } from "../../stores/auth-store";
-import { ROLE_INITIAL_ROUTE } from "../../constants/navigation";
+import { MAIN_ROUTE } from "../../constants/navigation";
 
 const SPLASH_DURATION = 2500;
 
@@ -49,11 +49,8 @@ export default function SplashScreen() {
       try {
         const restored = await restoreSession();
         if (restored) {
-          const role = useAuthStore.getState().role;
-          if (role) {
-            router.replace(ROLE_INITIAL_ROUTE[role as keyof typeof ROLE_INITIAL_ROUTE] as never);
-            return;
-          }
+          router.replace(MAIN_ROUTE as never);
+          return;
         }
       } catch {
         // Session restore failed, go to login

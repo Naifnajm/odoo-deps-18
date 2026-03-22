@@ -40,9 +40,7 @@ function AppInner() {
         }}
       >
         <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
-        <Stack.Screen name="(admin)" options={{ animation: "fade" }} />
-        <Stack.Screen name="(employee)" options={{ animation: "fade" }} />
-        <Stack.Screen name="(client)" options={{ animation: "fade" }} />
+        <Stack.Screen name="(main)" options={{ animation: "fade" }} />
       </Stack>
     </ThemeProvider>
   );

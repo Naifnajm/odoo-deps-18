@@ -54,3 +54,5 @@ export {
   useClientDocuments,
   useClientPortalSummary,
 } from "./use-client-portal";
+export { useOdooApps, ODOO_APP_CATEGORIES } from "./use-odoo-apps";
+export { useNotifications } from "./use-notifications";

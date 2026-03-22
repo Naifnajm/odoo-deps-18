@@ -1,18 +1,16 @@
 import { useEffect } from "react";
 import { router } from "expo-router";
 import { useAuthStore } from "../stores/auth-store";
-import { ROLE_INITIAL_ROUTE } from "../constants/navigation";
+import { MAIN_ROUTE } from "../constants/navigation";
 
 export function useRoleRedirect(): void {
   const isAuthenticated = useAuthStore((s: any) => s.isAuthenticated);
-  const role = useAuthStore((s: any) => s.role);
 
   useEffect(() => {
-    if (isAuthenticated && role) {
-      const route = ROLE_INITIAL_ROUTE[role as keyof typeof ROLE_INITIAL_ROUTE];
-      router.replace(route as never);
+    if (isAuthenticated) {
+      router.replace(MAIN_ROUTE as never);
     }
-  }, [isAuthenticated, role]);
+  }, [isAuthenticated]);
 }
 
 export function useAuthGuard(): void {
